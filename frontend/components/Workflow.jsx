@@ -1,62 +1,164 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 export default function Workflow() {
   const steps = [
-    { 
-      id: 1, 
-      title: "1. Secure Upload", 
-      desc: "Drag and drop your asset. Your file is verified locally and prepared for transfer without any destructive compression.", 
-      icon: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" 
+    {
+      id: 1,
+      label: "01",
+      title: "Secure Upload",
+      desc: "Drag and drop your asset. Your file is verified locally and prepared for transfer without any destructive compression.",
+      /* Woodcut-style upload arrow SVG path */
+      iconPath: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12",
     },
-    { 
-      id: 2, 
-      title: "2. Zero-Knowledge Encryption", 
-      desc: "Before leaving your device, the file is wrapped in an unbreakable encryption layer. We never have the keys to your data.", 
-      icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" 
+    {
+      id: 2,
+      label: "02",
+      title: "Zero-Knowledge Encryption",
+      desc: "Before leaving your device, the file is wrapped in an unbreakable encryption layer. We never have the keys to your data.",
+      iconPath: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
     },
-    { 
-      id: 3, 
-      title: "3. Decentralized Storage", 
-      desc: "The encrypted packet is distributed across our high-availability server nodes, ensuring it remains safe and accessible globally.", 
-      icon: "M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" 
+    {
+      id: 3,
+      label: "03",
+      title: "Decentralized Storage",
+      desc: "The encrypted packet is distributed across high-availability nodes, ensuring it remains safe and accessible globally.",
+      iconPath: "M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4",
     },
-    { 
-      id: 4, 
-      title: "4. Frictionless Retrieval", 
-      desc: "Share your unique 6-digit code or QR link. The recipient connects, downloads, and decrypts the exact bit-for-bit original file.", 
-      icon: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" 
+    {
+      id: 4,
+      label: "04",
+      title: "Frictionless Retrieval",
+      desc: "Share your unique 6-digit code or QR link. The recipient connects, downloads, and decrypts the exact bit-for-bit original.",
+      iconPath: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4",
     },
   ];
 
+  /* Scroll reveal — IntersectionObserver */
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    const els = sectionRef.current?.querySelectorAll(".reveal");
+    if (!els) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="workflow-section" className="w-full max-w-[1280px] mx-auto px-6 py-32 mt-16 border-t border-[rgba(255,255,255,0.05)]">
-      <div className="text-center mb-20 max-w-3xl mx-auto">
-        <h2 className="heading-2 mb-6 text-white">Engineered for Absolute Privacy</h2>
-        <p className="text-[#a1a1aa] text-lg leading-relaxed">
-          Blynq isn't just another file host. It is a purpose-built pipeline designed to protect intellectual property, large media assets, and sensitive documents from end to end. Here is exactly what happens when you hit upload.
-        </p>
-      </div>
+    <section
+      id="workflow-section"
+      ref={sectionRef}
+      className="bg-highlight section-pad"
+      aria-label="How Blynq works"
+    >
+      <div className="container-main">
+        {/* Eyebrow */}
+        <div className="eyebrow mb-8 reveal" style={{ color: "var(--ink-60)" }}>
+          <span>02 / HOW IT WORKS</span>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-        {/* Connecting Line */}
-        <div className="hidden md:block absolute top-[48px] left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[rgba(255,255,255,0.05)] via-[rgba(217,70,239,0.4)] to-[rgba(255,255,255,0.05)] z-0"></div>
+        {/* Asymmetric heading layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 mb-20 items-end">
+          <h2 className="heading-section text-ink leading-none reveal">
+            Engineered<br />for Absolute<br />
+            <span className="accent-word">Privacy</span>.
+          </h2>
+          <p className="body-text body-muted reveal" style={{ alignSelf: "end" }}>
+            Blynq isn't just another file host. It is a purpose-built pipeline designed to protect intellectual property, large media assets, and sensitive documents from end to end.
+          </p>
+        </div>
 
-        {steps.map((step, index) => (
-          <div key={step.id} className="flex flex-col items-center relative z-10 w-full px-2">
-            <div className="w-24 h-24 rounded-2xl glass-card flex items-center justify-center mb-8 bg-[#050505] shadow-[0_0_30px_rgba(0,0,0,0.6)] group hover:-translate-y-2 transition-all duration-300 border border-[rgba(255,255,255,0.1)] hover:border-[#d946ef]/50">
-              <svg className="w-10 h-10 text-[#a1a1aa] group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={step.icon} />
-              </svg>
+        {/* Steps grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+          {steps.map((step, index) => (
+            <div
+              key={step.id}
+              className="reveal border border-[var(--ink-12)] p-8 flex flex-col gap-5 group hover:bg-[var(--ink-06)] transition-colors duration-200 relative"
+              style={{ transitionDelay: `${index * 80}ms` }}
+            >
+              {/* Step number — large mono */}
+              <span
+                className="font-mono font-bold"
+                style={{
+                  fontSize: "clamp(3rem, 6vw, 4rem)",
+                  color: "var(--ink-12)",
+                  lineHeight: 1,
+                  letterSpacing: "-0.02em",
+                  userSelect: "none",
+                  transition: "color 200ms ease",
+                }}
+              >
+                {step.label}
+              </span>
+
+              {/* Woodcut icon */}
+              <div
+                className="w-12 h-12 border border-[var(--ink-12)] flex items-center justify-center group-hover:border-accent group-hover:bg-accent transition-all duration-200"
+                aria-hidden="true"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ color: "var(--ink)" }}
+                  className="group-hover:text-paper transition-colors duration-200"
+                >
+                  <path d={step.iconPath} />
+                </svg>
+              </div>
+
+              {/* Title */}
+              <h3 className="font-body font-bold text-ink" style={{ fontSize: "1rem", letterSpacing: "0.01em", lineHeight: 1.3 }}>
+                {step.title}
+              </h3>
+
+              {/* Desc */}
+              <p className="body-text body-muted" style={{ fontSize: "0.875rem", maxWidth: "none" }}>
+                {step.desc}
+              </p>
+
+              {/* Connector arrow (desktop, not last item) */}
+              {index < steps.length - 1 && (
+                <div
+                  className="hidden lg:flex items-center justify-center absolute -right-[13px] top-1/2 -translate-y-1/2 z-10"
+                  aria-hidden="true"
+                >
+                  <div
+                    className="w-6 h-6 border border-[var(--ink-12)] bg-highlight flex items-center justify-center"
+                    style={{ transform: "rotate(45deg)" }}
+                  />
+                </div>
+              )}
+
+              {/* Mobile down arrow */}
+              {index < steps.length - 1 && (
+                <div className="sm:hidden flex justify-center mt-2" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--ink-60)" }}>
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                  </svg>
+                </div>
+              )}
             </div>
-            <h3 className="font-bold text-xl mb-3 text-white text-center">{step.title}</h3>
-            <p className="text-[#a1a1aa] text-sm text-center leading-relaxed">{step.desc}</p>
-            
-            {/* Mobile Arrow */}
-            {index !== steps.length - 1 && (
-              <svg className="w-6 h-6 text-[rgba(255,255,255,0.1)] md:hidden my-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

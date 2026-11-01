@@ -163,3 +163,11 @@ async def get_qr(request: Request, code: str, db: Connection = Depends(get_db)):
     buf.seek(0)
     
     return StreamingResponse(buf, media_type="image/png")
+
+
+
+
+
+
+
+

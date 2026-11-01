@@ -1,4 +1,4 @@
-// File: C:\Users\ABHIJEET\OneDrive\Desktop\blynq\frontend\app\page.js
+// File: C:\Users\abhij\OneDrive\Desktop\Blynq\frontend\app\page.js
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

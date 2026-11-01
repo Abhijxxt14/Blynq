@@ -1,11 +1,29 @@
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Bebas_Neue, DM_Sans, Space_Mono } from 'next/font/google';
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' });
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata = {
-  title: "Blynq",
-  description: "Share files across the digital void",
+  title: "Blynq — Move Any File. Instantly.",
+  description: "Share files across devices with a 6-digit code. No compression. No friction. Files up to 5GB.",
   icons: {
     icon: "/logo.png",
   },
@@ -13,8 +31,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={jakarta.variable}>
-      <body className="font-sans bg-[#050505] text-white antialiased">
+    <html lang="en" className={`${bebasNeue.variable} ${dmSans.variable} ${spaceMono.variable}`}>
+      <body className="font-body bg-ink text-paper antialiased">
         {children}
       </body>
     </html>

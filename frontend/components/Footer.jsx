@@ -3,7 +3,7 @@ export default function Footer() {
     { label: "Home", href: "/" },
     { label: "How It Works", href: "#workflow-section" },
     { label: "Send a File", href: "#upload-section" },
-    { label: "Contact", href: "#" },
+    { label: "Contact", href: "mailto:abhijeetsoren222@gmail.com" },
   ];
 
   return (
